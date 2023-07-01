@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('NuméroFournisseur');
             $table->string('MDPFournisseur');
             $table->string('MobileMoneyFournisseur');
+            $table->string('AdresseFournisseur');
             $table->timestamps();
         });
     }

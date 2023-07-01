@@ -15,16 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('NomLivreur');
             $table->string('PrénomLivreur');
-            
-            
             $table->string('NuméroLivreur');
             $table->date('DateNaissanceLivreur');
             $table->string('MDPLivreur');
             $table->string('ConfirmerMDP');
             $table->string('MTNMoneyLivreur');
             $table->string('TypeEnginLivreur');
-            
-            
             $table->string('PlaqueImmatriculation');
             $table->string('PhotoLivreur');
             $table->string('CNILivreur');

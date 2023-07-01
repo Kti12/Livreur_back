@@ -30,15 +30,14 @@ class Livreur extends Model
         'MTNMoneyLivreur',
         'TypeEnginLivreur',
         'PlaqueImmatriculation',
-        'PhotoLivreur',
+         'PhotoLivreur',
         'CNILivreur',
         'CasierjudiciaireLivreur',
-        'PermisLivreur'
+        'PermisLivreur' ,
+        'is_approved'
         
     ];
-    protected $casts = [
-        'is_approved' => 'boolean',
-    ];
+    
 
     
 }

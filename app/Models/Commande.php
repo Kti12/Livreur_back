@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Commande extends Model
 {
     use HasFactory;
+    protected $fillable = [
+
+        'MontantCommande',
+        'DateCommande',
+'StatutCommande'
+
+
+    ];
+
 
     public function fournisseur()
     {
@@ -24,5 +33,9 @@ class Commande extends Model
     public function produit()
 {
     return $this->belongsToMany(Produit::class, 'Commande_Produit');
+}
+public function client()
+{
+    return $this->belongsTo(Client::class);
 }
 }

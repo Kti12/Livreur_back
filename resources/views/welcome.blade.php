@@ -49,7 +49,7 @@
 												
 										<div class="tab-content w-100" id="nav-tabContent">
 										  <div class="tab-pane fade show active" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
-											    <form action="{{ route('index') }}" class=" dz-form pb-3" method="GET">
+											    <form action="/index" class=" dz-form pb-3" method="GET">
 													<h3 class="form-title m-t0">Heureux de vous revoir!</h3>
 													<div class="dz-separator-outer m-b5">
 														<div class="dz-separator bg-primary style-liner"></div>

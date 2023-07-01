@@ -8,60 +8,48 @@ class LivreurController extends Controller{
 
     public function registerDriver(Request $request)
 {
+
+
     // Validation des données de la requête
-    $this->validate($request, [
+    $validatedData = $request->validate([
         'NomLivreur' => 'required|string|max:100',
         'PrénomLivreur' => 'required|string|max:100',
         'NuméroLivreur' => 'required|string|max:10',
-        'DateNaissanceLivreur' => 'required|date',
+        'DateNaissanceLivreur' => 'required',
         'MDPLivreur' => 'required|min:6',
-        'ConfirmerMDP' => 'required|same:password',
+        'ConfirmerMDP' => 'required|same:MDPLivreur',
         'MTNMoneyLivreur' => 'required',
         'TypeEnginLivreur' => 'required',
         'PlaqueImmatriculation' => 'required',
-        'PhotoLivreur' => 'required',
-        'CNILivreur' => 'required',
-        'CasierJudiciareLivreur' => 'required',
-        'PermisLivreur' => 'required',
-        'is_approved' => 'required'
-
-        // Ajoutez les autres règles de validation ici
+        
     ]);
-
-    $photoPath = $request->file('PhotoLivreur')->store('Livreur');
-    $cniPath = $request->file('CNILivreur')->store('cni');
-    $casierJudiciairePath = $request->file('casier_judiciaire')->store('casier');
-    $permisPath = $request->file('PermisLivreur')->store('permis');
-
-    // Création d'une nouvelle instance de Livreur
     $livreur = new Livreur();
 
     // Assignation des valeurs des champs du livreur à partir des données de la requête
-    $livreur->NomLivreur = $request->input('nom');
-    $livreur->PrénomLivreur = $request->input('prenom');
-    $livreur->NuméroLivreur = $request->input('numero');
-    $livreur->DateNaissanceLivreur = $request->input('date');
-    $livreur->MDPLivreur = bcrypt($request->input('mdp'));
-    $livreur->ConfirmerMDP = bcrypt($request->input('mdp'));
-    $livreur->MTNMoneyLivreur = $request->input('momo');
-    $livreur->TypeEnginLivreur = $request->input('type');
-    $livreur->PlaqueImmatriculation = $request->input('matricule');
-    $livreur->PhotoLivreur = $request->input('photo');
-    $livreur->CNILivreur = $request->input('cni');
-    $livreur->CasierJudiciaireLivreur = $request->input('casier');
-    $livreur->PermisLivreur = $request->input('permis');
+    $livreur->NomLivreur = $request->input('NomLivreur');
+    $livreur->PrénomLivreur = $request->input('PrénomLivreur');
+    $livreur->NuméroLivreur = $request->input('NuméroLivreur');
+    $livreur->DateNaissanceLivreur = $request->input('DateNaissanceLivreur');
+    $livreur->MDPLivreur = bcrypt($request->input('MDPLivreur'));
+    $livreur->ConfirmerMDP = bcrypt($request->input('ConfirmerMDP'));
+    $livreur->MTNMoneyLivreur = $request->input('MTNMoneyLivreur');
+    $livreur->TypeEnginLivreur = $request->input('TypeEnginLivreur');
+    $livreur->PlaqueImmatriculation = $request->input('PlaqueImmatriculation');
+    $livreur->PhotoLivreur = $request->input('PhotoLivreur');
+    $livreur->CNILivreur = $request->input('CNILivreur ');
+    $livreur->CasierJudiciaireLivreur = $request->input('CasierJudiciaireLivreur');
+    $livreur->PermisLivreur = $request->input('PermisLivreur');
     $livreur->is_approved = false;
-    // Assignation des autres champs du livreur
 
-    // Sauvegarde du livreur dans la base de données
     $livreur->save();
+    return response()->json(['message' => 'Vos informations ont bien été enregistrées']);
 
     // Envoi d'une notification à l'administrateur
     // Utilisez votre méthode préférée pour envoyer une notification à l'administrateur
 
     // Retourner une réponse JSON avec un message de succès
     // Send a notification to the admin
-    // Replace `admin@example.com` with the actual admin email address
+   
     $adminEmail = 'katienesoro12@gmail.com';
     $subject = 'Nouvelle demande d\'inscription-livreur';
     $message = 'Une personne désire être livreur AISA, veuillez vous connectez à votre espace pour le contacter.';

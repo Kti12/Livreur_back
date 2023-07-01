@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Livraison extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'DateLivraison',
+'HeureLivraison',
+'MontantLivraison',
+'livreur_id',
+'commande_id',
+'client_id'
+    ];
     public function commande()
     {
         return $this->belongsTo(Commande::class);

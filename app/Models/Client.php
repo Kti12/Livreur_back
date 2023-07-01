@@ -8,6 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'NomClient',
+'EmailClient',
+'NuméroClient',
+'MDPClient',
+'AdresseClient',
+'ModePaiementClient'
+        
+    ];
     public function livraison()
     {
         return $this->hasMany(Livraison::class);
@@ -16,4 +25,8 @@ class Client extends Model
     {
         return $this->hasMany(Avis::class);
     }
+    public function commande()
+{
+    return $this->hasMany(Commande::class);
+}
 }

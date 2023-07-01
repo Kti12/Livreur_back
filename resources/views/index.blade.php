@@ -1204,66 +1204,7 @@
 							</div>
 						</div>
 						<div class="mere">
-    <div class="cartemere">
-        <div class="carte">
-            <div class="table">
-                <div class="c">
-                    <h4 class="h4">Les livreurs</h4>
-                </div>
-				<div class="container_table">
-                	<table id="" class="table">
-                	    <thead>
-                	        <tr>
-							<th>#</th>
-                	    <th>Nom</th>
-                	    <th>Prénom</th>
-                	    <th>Numéro</th>
-                	    <th>Date de naissance</th>
-                	    <th>Mot de passe</th>
-                	    <th>Numéro MTN money</th>
-                	    <th>Type d'engin</th>
-                	    <th>Plaque d'immatriculation</th>
-                	    <th>Photo</th>
-                	    <th>CNI</th>
-                	    <th>Casier Judiciaire</th>
-                	    <th>Permis</th>
-                	    <th>Action</th>
-                	        </tr>
-                	    </thead>
-                	    <tbody>
-                	        @foreach ($livreurs as $livreur)
-                	            @if ($livreur->is_approved)
-                	                <tr>
-									<td>{{ $livreur->id }}</td>
-                	        <td>{{ $livreur->NomLivreur }}</td>
-                	        <td>{{ $livreur->PrénomLivreur }}</td>
-                	        <td>{{ $livreur->NuméroLivreur }}</td>
-                	        <td>{{ $livreur->DateNaissanceLivreur }}</td>
-                	        <td>{{ $livreur->MDPLivreur }}</td>
-                	        <td>{{ $livreur->MTNMoneyLivreur }}</td>
-                	        <td>{{ $livreur->TypeEnginLivreur }}</td>
-                	        <td>{{ $livreur->PlaqueImmatriculation }}</td>
-	
-                	        <td><img src="{{ $livreur->PhotoLivreur }}" alt="Photo du Livreur"></td>
-                	        <td><img src="{{ $livreur->CNILivreur }}" alt="CNI du Livreur"></td>
-                	        <td><img src="{{ $livreur->CasierJudiciaireLivreur }}" alt="Casier Judiciaire du Livreur"></td>
-                	        <td><img src="{{ $livreur->PermisLivreur }}" alt="Permis du Livreur"></td>
-                	        <td>
-                	            <form action="{{ route('supprime', $livreur->id) }}" method="POST">
-                	                @csrf
-                	                @method('DELETE')
-                	                <button type="submit">Supprimer</button>
-	
-                	            </form>
-                	                </tr>
-                	            @endif
-                	        @endforeach
-                	    </tbody>
-                	</table>
-				</div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 
 					

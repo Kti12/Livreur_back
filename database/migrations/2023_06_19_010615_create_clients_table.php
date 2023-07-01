@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('NuméroClient');
             $table->string('MDPClient');
             $table->string('AdresseClient');
-            
             $table->string('ModePaiementClient');
             $table->timestamps();
         });
