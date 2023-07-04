@@ -839,8 +839,8 @@
                     <tr>
                         <td>{{ $livreur->id }}</td>
                         <td>{{ $livreur->NomLivreur }}</td>
-                        <td>{{ $livreur->PrénomLivreur }}</td>
-                        <td>{{ $livreur->NuméroLivreur }}</td>
+                        <td>{{ $livreur->PrenomLivreur }}</td>
+                        <td>{{ $livreur->NumeroLivreur }}</td>
                         <td>{{ $livreur->DateNaissanceLivreur }}</td>
                         <td>{{ $livreur->MDPLivreur }}</td>
                         <td>{{ $livreur->MTNMoneyLivreur }}</td>

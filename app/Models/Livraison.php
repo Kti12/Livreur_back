@@ -20,9 +20,9 @@ class Livraison extends Model
     {
         return $this->belongsTo(Commande::class);
     }
-    public function livreur()
+    public function user()
     {
-        return $this->belongsTo(Livreur::class);
+        return $this->belongsTo(User::class);
     }
     public function client()
     {

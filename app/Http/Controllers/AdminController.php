@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Livreur;
+use App\Models\User;
 use App\Models\Client;
 
 class AdminController extends Controller
@@ -13,7 +13,7 @@ class AdminController extends Controller
 public function dashboard()
 {
     // Retrieve the list of approved drivers from the database
-    $livreurs = Livreur::where('is_approved', true)->get();
+    $livreurs = User::where('is_approved', true)->get();
     
 
     // Pass the drivers data to the dashboard view
@@ -24,7 +24,7 @@ public function dashboard()
 }
 public function supprimeLivreur($id)
     {
-        $livreur = Livreur::findOrFail($id);
+        $livreur = User::findOrFail($id);
         $livreur->delete();
 
         return redirect()->back()->with( 'Le livreur a été supprimé avec succès.');

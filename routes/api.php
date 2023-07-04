@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\LivreurController;
 use App\Http\Controllers\ClientController;
@@ -29,7 +30,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::get('/produits', [ProductController::class, 'index1']);
 Route::post('/commandes', [CommandeController::class, 'store']);
-Route::post('/livreurs', [LivreurController::class, 'registerDriver']);
+Route::post('/users/register', [LivreurController::class, 'registerDriver']);
+Route::post('/users/login', [LivreurController::class, 'loginDriver']);
 Route::get('/clients/{id}', [ClientController::class, 'show']);
 Route::post('/set-postion', [ClientController::class, 'set_postion']);
 

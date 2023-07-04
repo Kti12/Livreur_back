@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('DateLivraison');
             $table->string('HeureLivraison');
             $table->string('MontantLivraison');
-            $table->foreignId('livreur_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('commande_id')->constrained()->onDelete('cascade');
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->timestamps();

@@ -13,11 +13,24 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('NomLivreur');
+            $table->string('PrenomLivreur');
+            $table->string('NumeroLivreur');
+            $table->date('DateNaissanceLivreur');
+            $table->string('MDPLivreur');
+            $table->string('ConfirmerMDP');
+            $table->string('MTNMoneyLivreur');
+            $table->string('TypeEnginLivreur');
+
+            $table->string('PlaqueImmatriculation');
+            $table->string('PhotoLivreur');
+            $table->string('CNILivreur');
+            $table->string('CasierjudiciaireLivreur');
+            $table->string('PermisLivreur');
+            $table->boolean('is_approved')->default(false);
+            
+            
+            
             $table->timestamps();
         });
     }
