@@ -34,7 +34,8 @@ Route::post('/users/register', [LivreurController::class, 'registerDriver']);
 Route::post('/users/login', [LivreurController::class, 'loginDriver']);
 Route::get('/clients/{id}', [ClientController::class, 'show']);
 Route::post('/set-postion', [ClientController::class, 'set_postion']);
-
+Route::post('/set-postionLivreur', [LivreurController::class, 'set_postionLivreur']);
+Route::post('/plus_proche', [LivreurController::class, 'plus_proche']);
 
 // $app->post('/api/cart/add', function (Request $request, Response $response) {
 //     // Récupérer les données du produit depuis la requête

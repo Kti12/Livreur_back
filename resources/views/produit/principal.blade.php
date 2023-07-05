@@ -611,7 +611,7 @@
 					
 					
 	
-					<li><a class="has-arrow " href="javascript:void(0);" >
+					<li><a class="has-arrow " href="{{ route('livreurs.index') }}" >
 						<div class="menu-icon">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<g opacity="0.5">

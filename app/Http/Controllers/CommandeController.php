@@ -44,6 +44,12 @@ class CommandeController extends Controller
         
         $commande->save();
 
+        $livreur_plus_proche_data = $this->plus_proche();
+
+    // Récupérez les données du livreur le plus proche et de la distance minimale depuis la réponse
+    $livreur_plus_proche = $livreur_plus_proche_data['livreur_plus_proche'];
+    $distance_minimale = $livreur_plus_proche_data['distance_minimale'];
+
         return response()->json(['message' => 'Commande enregistrée avec succès']);
     }
 

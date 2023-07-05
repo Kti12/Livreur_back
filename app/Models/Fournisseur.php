@@ -9,6 +9,14 @@ class Fournisseur extends Model
 {
     use HasFactory;
 
+
+    protected $fillable=[
+        'NomFournisseur',
+'NuméroFournisseur',
+'MDPFournisseur',
+'MobileMoneyFournisseur',
+'AdresseFournisseur'
+    ];
     public function commande()
     {
         return $this->hasMany(Commande::class);

@@ -20,9 +20,7 @@ return new class extends Migration
             $table->string('MDPLivreur');
             $table->string('ConfirmerMDP');
             $table->string('MTNMoneyLivreur');
-            $table->string('TypeEnginLivreur');
-
-            $table->string('PlaqueImmatriculation');
+            
             $table->string('PhotoLivreur');
             $table->string('CNILivreur');
             $table->string('CasierjudiciaireLivreur');

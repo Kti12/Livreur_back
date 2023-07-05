@@ -27,12 +27,11 @@ class User extends Authenticatable
         'MDPLivreur',
         'ConfirmerMDP',
         'MTNMoneyLivreur',
-        'TypeEnginLivreur',
-        'PlaqueImmatriculation',
-   /*      'PhotoLivreur',
+        
+      'PhotoLivreur',
         'CNILivreur',
         'CasierJudiciaireLivreur',
-        'PermisLivreur' , */
+        'PermisLivreur' , 
         'is_approved'
         
     ];

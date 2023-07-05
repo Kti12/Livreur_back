@@ -15,7 +15,7 @@ class LivreurController extends Controller{
     public function registerDriver(Request $request)
 {
     try{
-        /* $input = $request->all();
+        $input = $request->all();
         $validator = Validator::make($input,[
             
             'NomLivreur' => 'required',
@@ -25,8 +25,7 @@ class LivreurController extends Controller{
             'MDPLivreur' => 'required',
             'ConfirmerMDP' => 'required',
             'MTNMoneyLivreur' => 'required',
-            'TypeEnginLivreur' => 'required',
-            'PlaqueImmatriculation' => 'required',
+            
         
         ]);
         
@@ -53,7 +52,7 @@ class LivreurController extends Controller{
         }
         if ($request->file('PhotoLivreur')) {
             $input['PhotoLivreur'] = $request->file('PhotoLivreur')->store('users');
-        } */
+        } 
 
         // Répéter pour les autres images (CNI, CasierJudiciaire, Permis)
         if ($request->file('CNILivreur')) {
@@ -177,7 +176,7 @@ public function loginDriver(Request $request){
 }
 public function afficherLivreurs()
     {
-        $livreur = User::all();
+        $livreurs = User::all();
 
         return view('livreur', compact('livreurs'));
     }
@@ -200,11 +199,64 @@ public function afficherLivreurs()
     
         // Save the changes to the database
         $livreur->save();
+
+        
     
         // Redirect back to the admin dashboard with a success message
         return redirect()->route('livreurs.index')->with('success', 'Driver registration approved');
     }
-    
+
+    public function set_postionLivreur(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $user->latitude = $request->latitude;
+        $user->longitude = $request->longitude;
+        $user->save();
+        return response()->json(['message' => 'Préparer à recevoir des commandes'], 200);
+    }
+    public function plus_proche(){
+        $fournisseur_latitude = 5.2518156
+        ; // Coordonnées du fournisseur (à remplacer par les coordonnées du fournisseur)
+        $fournisseur_longitude = -3.8786808;
+
+        $livreurs = User::whereNotNull('latitude')->whereNotNull('longitude')->get();
+
+        $livreur_plus_proche = null;
+        $distance_minimale = PHP_FLOAT_MAX;
+
+        foreach ($livreurs as $livreur) {
+            $distance = $this->distanceHaversine($fournisseur_latitude, $fournisseur_longitude, $livreur->latitude, $livreur->longitude);
+            if ($distance < $distance_minimale) {
+                $distance_minimale = $distance;
+                $livreur_plus_proche = $livreur;
+            }
+        }
+
+        return response()->json([
+            'livreur_plus_proche' => $livreur_plus_proche,
+            'distance_minimale' => $distance_minimale,
+        ]);
+    }
+
+    // Fonction pour calculer la distance haversine entre deux points géographiques
+function haversineDistance($latitude1, $longitude1, $latitude2, $longitude2)
+{
+    $earthRadius = 6371; // Rayon de la Terre en kilomètres
+
+    $deltaLat = deg2rad($latitude2 - $latitude1);
+    $deltaLon = deg2rad($longitude2 - $longitude1);
+
+    $a = sin($deltaLat / 2) * sin($deltaLat / 2) +
+        cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) *
+        sin($deltaLon / 2) * sin($deltaLon / 2);
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+    $distance = $earthRadius * $c;
+
+    return $distance;
 }
+
+    }
+    
+
 
 
