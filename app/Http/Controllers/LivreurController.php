@@ -7,8 +7,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-
-
+use App\Models\Notification;
+use App\Notifications\CreationLivreur;
+use App\Models\Client;
+use App\Models\Administrateur;
+use App\Models\Livraison;
+use App\Models\Paiement;
+use App\Events\NotificationLivreur;
+use App\Mail\TestEmail;
+use Illuminate\Support\Facades\Mail;
 
 class LivreurController extends Controller{
 
@@ -17,7 +24,7 @@ class LivreurController extends Controller{
     try{
         $input = $request->all();
         $validator = Validator::make($input,[
-            
+
             'NomLivreur' => 'required',
             'PrenomLivreur' => 'required',
             'NumeroLivreur' => 'required',
@@ -25,10 +32,10 @@ class LivreurController extends Controller{
             'MDPLivreur' => 'required',
             'ConfirmerMDP' => 'required',
             'MTNMoneyLivreur' => 'required',
-            
-        
+
+
         ]);
-        
+
         $validator->sometimes('PhotoLivreur', 'image', function ($input) {
             return $input->file('PhotoLivreur');
         });
@@ -52,7 +59,7 @@ class LivreurController extends Controller{
         }
         if ($request->file('PhotoLivreur')) {
             $input['PhotoLivreur'] = $request->file('PhotoLivreur')->store('users');
-        } 
+        }
 
         // Répéter pour les autres images (CNI, CasierJudiciaire, Permis)
         if ($request->file('CNILivreur')) {
@@ -64,10 +71,30 @@ class LivreurController extends Controller{
         if ($request->file('PermisLivreur')) {
             $input['PermisLivreur'] = $request->file('PermisLivreur')->store('users');
         }
-        
+
         $input['MDPLivreur']=Hash::make($request->MDPLivreur);
         $input['ConfirmerMDP']=Hash::make($request->ConfirmerMDP);
         $livreur = User::create($input);
+
+        // recupération de l'administrateur
+        $administrateur = Administrateur::first();
+
+        // envoie de notification en passant le nom du livreur dans la fonction
+        // Notification::send($administrateur, new CreationLivreur($request->NomLivreur));
+        Notification::create([
+            'type' => 'admin',
+            'notifiable_id' => $administrateur ? $administrateur->id : 1,
+            'notifiable_type' => 1,
+            'data' => 'Un nouveau livreur '.$request->NomLivreur.' vient de créer un compte. Veuillez vérifier votre espace livreur',
+        ]);
+
+        $mailData = [
+            'nom' => $request->NomLivreur,
+        ];
+
+        // envoyer le mail
+        Mail::to($administrateur->EmailAdmin)->send(new \App\Mail\TestEmail($mailData));
+
         return response()->json([
             "status" => true,
             "message" => "Vos informations ont bien ete envoye",
@@ -82,7 +109,7 @@ class LivreurController extends Controller{
             "message"=>$th->getMessage()
         ], 500,);
     }
-/* 
+/*
     // Validation des données de la requête
     $validatedData = $request->validate([
         'NomLivreur' => 'required|string|max:100',
@@ -94,7 +121,7 @@ class LivreurController extends Controller{
         'MTNMoneyLivreur' => 'required',
         'TypeEnginLivreur' => 'required',
         'PlaqueImmatriculation' => 'required',
-        
+
     ]);
     $livreur = new Livreur();
 
@@ -119,30 +146,30 @@ class LivreurController extends Controller{
    }else{
     return response()->json(['succès' => false]);
    };
-    
+
 
     // Envoi d'une notification à l'administrateur
     // Utilisez votre méthode préférée pour envoyer une notification à l'administrateur
 
     // Retourner une réponse JSON avec un message de succès
     // Send a notification to the admin
-   
+
     $adminEmail = 'katienesoro12@gmail.com';
     $subject = 'Nouvelle demande d\'inscription-livreur';
     $message = 'Une personne désire être livreur AISA, veuillez vous connectez à votre espace pour le contacter.';
     mail($adminEmail, $subject, $message);
  */
-    
+
 }
 public function loginDriver(Request $request){
     try{
         $input = $request->all();
         $validator = Validator::make($input,[
-            
+
         'NumeroLivreur' => 'required|string|max:10',
-        
+
         'MDPLivreur' => 'required|min:6',
-        
+
         ]);
         if($validator->fails()){
             return response()->json([
@@ -174,11 +201,31 @@ public function loginDriver(Request $request){
         ], 500,);
     }
 }
-public function afficherLivreurs()
+    public function afficherLivreurs()
     {
         $livreurs = User::all();
+        \Carbon\Carbon::setLocale('fr');
+        $livreurs = User::where('is_approved', true)->get();
+        $clients = Client::all();
+        $admins = Administrateur::get();
+        $notifications = Notification::get();
+        $livraisons = Livraison::get();
+        $paiements = Paiement::get();
 
-        return view('livreur', compact('livreurs'));
+        return view('livreur', compact('livreurs', 'notifications', 'clients', 'admins', 'livraisons', 'paiements'));
+    }
+
+    function livraisons() {
+        $livreurs = User::all();
+        \Carbon\Carbon::setLocale('fr');
+        $livreurs = User::where('is_approved', true)->get();
+        $clients = Client::all();
+        $admins = Administrateur::get();
+        $notifications = Notification::get();
+        $livraisons = Livraison::get();
+        $paiements = Paiement::get();
+
+        return view('livraison', compact('livreurs', 'notifications', 'clients', 'admins', 'livraisons', 'paiements'));
     }
 
     public function supprimerLivreur($id)
@@ -193,15 +240,15 @@ public function afficherLivreurs()
     {
         // Find the driver by ID
         $livreur =User::findOrFail($id);
-    
+
         // Update the is_approved field to true
         $livreur->is_approved = true;
-    
+
         // Save the changes to the database
         $livreur->save();
 
-        
-    
+
+
         // Redirect back to the admin dashboard with a success message
         return redirect()->route('livreurs.index')->with('success', 'Driver registration approved');
     }
@@ -256,7 +303,7 @@ function haversineDistance($latitude1, $longitude1, $latitude2, $longitude2)
 }
 
     }
-    
+
 
 
 

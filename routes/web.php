@@ -19,9 +19,9 @@ use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/index', function () {
-    return view('index');
-})->name('index');
+// Route::get('/index', function () {
+//     return view('index');
+// })->name('index');
 
 
 
@@ -34,12 +34,15 @@ Route::delete('/produit/{id}', [ProductController::class, 'destroy'])->name('pro
 
 
 Route::get('/index', [AdminController::class, 'dashboard'])->name('admin.index');
+Route::get('/notification', [AdminController::class, 'notification']);
+
 Route::delete('/index/{id}', [AdminController::class, 'supprimeLivreur'])->name('supprime');
 
-Route::get('/index', [AdminController::class, 'index2'])->name('client.index');
+// Route::get('/index', [AdminController::class, 'index2'])->name('client.index');
 Route::delete('/index/{id}', [AdminController::class, 'supprimerclient'])->name('client.supprimer');
 
 Route::get('/livreur', [LivreurController::class, 'afficherLivreurs'])->name('livreurs.index');
+Route::get('/livraisons', [LivreurController::class, 'livraisons'])->name('livraisons.index');
 Route::delete('/livreur/{id}', [LivreurController::class, 'supprimerLivreur'])->name('livreurs.supprimer');
 Route::put('/livreur/{id}/approve', [LivreurController::class, 'approveDriverRegistration'])->name('drivers.approve');
 
